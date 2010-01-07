@@ -1,7 +1,7 @@
 /*
  * Sunflower
- * �o�T�F���w�Z�~�i�[ 07-85 ISSN 0386-4960 pp.34 �u�Ђ܂��̂��ˁv����a�v
- *       �́u���ʂɂ��˂�������vN88-BASIC
+ * 出典：数学セミナー 07-85 ISSN 0386-4960 pp.34 「ひまわりのたね」東川和夫
+ *       の「球面にたねがついたら」N88-BASIC
  */
 #include <stdio.h>
 #include <math.h>
@@ -12,16 +12,16 @@ void display(void);
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 
-	// �`���c�L��h�����߃_�u���o�b�t�@�����O���[�h���w��
+	// チラツキを防ぐためダブルバッファリングモードを指定
 	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA);
 
-	// �E�B���h�̃^�C�g�����w��
+	// ウィンドのタイトルを指定
 	glutCreateWindow("Sunflower");
 
-	// �\���p�̃n���h����ʒm
+	// 表示用のハンドラを通知
 	glutDisplayFunc(display);
 
-	// �C�x���g�Ҏ󃋁[�v
+	// イベント待受ループ
 	glutMainLoop();
 
 	return 0;
@@ -50,7 +50,7 @@ void display(void) {
 	double w;
 	double XX = 0.001*2;
 
-	// �E�B���h�E���N���A����
+	// ウィンドウをクリアする
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	dp = M_PI * 2.0;
@@ -59,7 +59,7 @@ void display(void) {
 	i = 6;
 	v1 = 1.0 / 48.0;
 	v2 = 0.0;
-	n1 = (int)(360 / c); // TODO �֐����p�ӂ���Ă���Ȃ炻������g��
+	n1 = (int)(360 / c); // TODO 関数が用意されているならそちらを使う
 	sa = sqrt(360.0 * c);
 	for(n = 0; n <= n1; n++) {
 	  vv1 = gs * n + v1;
@@ -93,6 +93,6 @@ void display(void) {
 	  }
 	}
 
-	// �o�b�t�@��؂�ւ��ĕ\������
+	// バッファを切り替えて表示する
 	glutSwapBuffers();
 }
