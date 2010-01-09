@@ -5,43 +5,10 @@
  */
 #include <stdio.h>
 #include <math.h>
-#include <GL/glut.h>
 
-void display(void);
+#include "drawUtil.h"
 
-int main(int argc, char** argv) {
-	glutInit(&argc, argv);
-
-	// チラツキを防ぐためダブルバッファリングモードを指定
-	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA);
-
-	// ウィンドのタイトルを指定
-	glutCreateWindow("Sunflower");
-
-	// 表示用のハンドラを通知
-	glutDisplayFunc(display);
-
-	// イベント待受ループ
-	glutMainLoop();
-
-	return 0;
-}
-
-void beginLine() {
-    glBegin(GL_LINE_STRIP);
-    glColor3d(1.0, 1.0, 1.0);
-}
-
-void endLine() {
-    glEnd();
-}
-
-void move(double x, double y) {
-    double XX = 0.001*4;
-    glVertex2d((0.0 + x) * XX, (y) * XX);
-}
-
-void display(void) {
+void drawSunflower(void) {
   double dp;
   double gs;
   double c;
@@ -49,9 +16,6 @@ void display(void) {
   double v1, v2;
   int    n1;
   double sa;
-
-  // ウィンドウをクリアする
-  glClear(GL_COLOR_BUFFER_BIT);
 
   dp = M_PI * 2.0;
   gs = (sqrt(5.0) - 1.0) / 2.0;
@@ -102,7 +66,4 @@ void display(void) {
       endLine();
     }
   }
-
-  // バッファを切り替えて表示する
-  glutSwapBuffers();
 }
