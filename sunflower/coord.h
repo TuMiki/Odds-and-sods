@@ -27,6 +27,7 @@ class coord {
     coord& operator=(const coord& cod); // coord = coord。戻り値が参照！
     coord operator+(const coord& cod); // coord + coord
     coord operator-(const coord& cod); // coord - coord
+    coord operator-(); // - coord
     coord operator*(double a); // coord * double
     coord operator*(const coord& cod); // 外積
 

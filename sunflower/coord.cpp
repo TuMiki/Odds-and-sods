@@ -1,9 +1,10 @@
+#include <stdio.h>
 #include <math.h>
 
 #include "coord.h"
 
 /*
- * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+ * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 coord::coord(int n) {
   dim = n;
@@ -29,10 +30,10 @@ coord::coord(const coord& cod) {
 }
 
 /*
- * ƒfƒXƒgƒ‰ƒNƒ^
+ * ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 coord::~coord() {
-  // ¡‚Ì‚Æ‚±‚ë•K—v‚È‚¢
+  // ä»Šã®ã¨ã“ã‚å¿…è¦ãªã„
 }
 
 coord& coord::operator=(const coord& cod) {
@@ -61,6 +62,13 @@ coord coord::operator-(const coord& cod) {
   return tmp;
 }
 
+coord coord::operator-() {
+  coord tmp(*this);
+  for(int i=0; i < tmp.dim; i++) {
+    tmp.v[i] *= -1;
+  }
+  return tmp;
+}
 coord coord::operator*(double a) {
   coord tmp(*this);
   tmp.v[0] *= a;
@@ -70,7 +78,7 @@ coord coord::operator*(double a) {
 }
 
 coord coord::operator*(const coord& cod) {
-  // TODO: ‘o•û‚ÌƒxƒNƒgƒ‹‚ÅŸŒ³‚ªˆá‚¤‚ÆƒGƒ‰[‚©‚ÈH0‰ğßH
+  // TODO: åŒæ–¹ã®ãƒ™ã‚¯ãƒˆãƒ«ã§æ¬¡å…ƒãŒé•ã†ã¨ã‚¨ãƒ©ãƒ¼ã‹ãªï¼Ÿ0è§£é‡ˆï¼Ÿ
   coord tmp(3);
   tmp.v[0] = this->v[1]*cod.v[2] - this->v[2]*cod.v[1];
   tmp.v[1] = this->v[2]*cod.v[0] - this->v[0]*cod.v[2];

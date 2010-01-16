@@ -1,59 +1,80 @@
 #include <string>
 #include <iostream>
-#include <cppunit/TestAssert.h>
-#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include "coord.h"
 
-class coordTest : public CppUnit::TestFixture {
+using std::string;
+using std::cout;
+using std::endl;
+
+class coordTest : public CPPUNIT_NS::TestFixture {
+    CPPUNIT_TEST_SUITE(coordTest);
+        CPPUNIT_TEST(constractor_2d_Test);
+        CPPUNIT_TEST(constractor_3d_Test);
+        CPPUNIT_TEST(constractor_2d_set_Test);
+        CPPUNIT_TEST(constractor_2d_copy_Test);
+
+        CPPUNIT_TEST(constractor_2d_assign_Test);
+    CPPUNIT_TEST_SUITE_END();
+
 private:
 public:
-    void setUp() {
-    }
+    void setUp() {};
+    void tearDown() {};
 
-    void tearDown() {
-    }
-
-    void constractorTest() {
-        std::cout << "■ coord(int dim); // 指定した次元で座標を生成" << std::endl;
-
+protected:
+    void constractor_2d_Test() {
         coord a(2);
-        CPPUNIT_ASSERT( a.toString() == "(0, 0)");
-        coord b(3);
-        std::cout << a << std::endl;
-        std::cout << b << std::endl;
-    }
-/*
-    {
-        std::cout << "■ coord(double x, double y);  // 2次元で座標を生成" << std::endl;
+        string s = "(0,0)";
 
+        CPPUNIT_ASSERT_EQUAL( s, a.toString() );
+    }
+
+    void constractor_3d_Test() {
+        coord a(3);
+        string s = "(0,0,0)";
+
+        CPPUNIT_ASSERT_EQUAL( s, a.toString() );
+    }
+
+    void constractor_2d_set_Test() {
         coord a(2, 3);
-        std::cout << a << std::endl;
-    }
-    {
-        std::cout << "■ coord(const coord& cod);  // 指定した座標をコピーして生成" << std::endl;
+        string s = "(2,3)";
 
+        CPPUNIT_ASSERT_EQUAL( s, a.toString() );
+    }
+
+    void constractor_2d_copy_Test() {
         coord a(3, 4);
         coord b(a);
-        
-        std::cout << a << std::endl;
-        std::cout << b << std::endl;
+
+        string s = "(3,4)";
+
+        CPPUNIT_ASSERT_EQUAL( s, a.toString() );
+        CPPUNIT_ASSERT_EQUAL( s, b.toString() );
     }
 
-    {
-        std::cout << "■ coord& operator=(const coord& cod); // coord = coord。戻り値が参照！" << std::endl;
-
+    void constractor_2d_assign_Test() {
         coord a(2, 3);
         coord b(2);
 
-        std::cout << a << std::endl;
-        std::cout << b << std::endl;
+        string s1 = "(2,3)";
+        string s2 = "(0,0)";
+
+        CPPUNIT_ASSERT_EQUAL( s1, a.toString() );
+        CPPUNIT_ASSERT_EQUAL( s2, b.toString() );
 
         b = a;
 
-        std::cout << a << std::endl;
-        std::cout << b << std::endl;
+        CPPUNIT_ASSERT_EQUAL( s1, a.toString() );
+        CPPUNIT_ASSERT_EQUAL( s1, b.toString() );
     }
+};
+
+CPPUNIT_TEST_SUITE_REGISTRATION(coordTest);
+
+/*
 
         std::cout << "■ coord operator+(const coord& cod); // coord + coord" << std::endl;
         std::cout << "■ coord operator-(const coord& cod); // coord - coord" << std::endl;
@@ -74,4 +95,34 @@ public:
 
     return 0;
     */
-}
+
+#include <cppunit/BriefTestProgressListener.h>
+#include <cppunit/CompilerOutputter.h>
+#include <cppunit/extensions/TestFactoryRegistry.h>
+#include <cppunit/TestResult.h>
+#include <cppunit/TestResultCollector.h>
+#include <cppunit/TestRunner.h>
+
+int main( int argc, char* argv[] ) {
+  // イベント・マネージャとテスト・コントローラを生成する
+  CPPUNIT_NS::TestResult controller;
+
+  // テスト結果収集リスナをコントローラにアタッチする
+  CPPUNIT_NS::TestResultCollector result;
+  controller.addListener( &result );
+
+  // 「.」で進行状況を出力するリスナをアタッチする
+  CPPUNIT_NS::BriefTestProgressListener progress;
+  controller.addListener( &progress );
+
+  // テスト・ランナーにテスト群を与え、テストする
+  CPPUNIT_NS::TestRunner runner;
+  runner.addTest( CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest() );
+  runner.run( controller );
+
+  // テスト結果を標準出力に吐き出す
+  CPPUNIT_NS::CompilerOutputter outputter( &result, CPPUNIT_NS::stdCOut() );
+  outputter.write();
+
+  return result.wasSuccessful() ? 0 : 1;
+} 
