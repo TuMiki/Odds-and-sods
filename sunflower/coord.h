@@ -32,6 +32,9 @@ class coord {
     coord operator*(double a); // coord * double
     coord operator*(const coord& cod); // äOêœ
 
+    bool operator==(const coord& cod); // î‰är
+    bool operator!=(const coord& cod); // î‰är
+
     double length();
     double dot(const coord& cod); // ì‡êœ
 

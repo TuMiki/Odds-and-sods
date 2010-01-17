@@ -25,8 +25,10 @@ class coordTest : public CPPUNIT_NS::TestFixture {
         CPPUNIT_TEST(operator_multiply_2d_Test);
 
         CPPUNIT_TEST(operator_exterior_Test);
+        CPPUNIT_TEST(operator_equals_Test);
 
         CPPUNIT_TEST(length_Test);
+        CPPUNIT_TEST(dot_Test);
         
     CPPUNIT_TEST_SUITE_END();
 
@@ -234,8 +236,29 @@ protected:
         CPPUNIT_ASSERT_EQUAL( s4, c.toString() );
         CPPUNIT_ASSERT_EQUAL( s5, d.toString() );
 
-        // TODO: coordに==を実装した方がよい
-        CPPUNIT_ASSERT_EQUAL( d.toString(), e.toString() );
+        // TODO: CPPUNIT_ASSERT_EQUAL( d, e)とするには宣言がたりないみたい
+        CPPUNIT_ASSERT( d == e );
+    }
+
+    void operator_equals_Test() {
+        coord a(1, 2, 3);
+        coord b(a);
+        coord c(1,0,0);
+
+        string s1 = "(1,2,3)";
+        string s3 = "(0,0,0)";
+        string s4 = "(1,0,0)";
+
+        CPPUNIT_ASSERT_EQUAL( s1, a.toString() );
+        CPPUNIT_ASSERT_EQUAL( s1, b.toString() );
+        CPPUNIT_ASSERT_EQUAL( s4, c.toString() );
+
+
+        CPPUNIT_ASSERT(a == b);
+        CPPUNIT_ASSERT(!(a != b));
+        CPPUNIT_ASSERT(a == (b + (c * 1e-11))); // ちょっと大雑把。絶対比較で誤差比較してるってこと
+        CPPUNIT_ASSERT(a != (b + (c * 1e-10)));
+
     }
 
     void length_Test() {
@@ -253,6 +276,20 @@ protected:
 
         CPPUNIT_ASSERT_EQUAL( s1, a.toString() );
         CPPUNIT_ASSERT_EQUAL( d4, c );
+    }
+
+    void dot_Test() {
+        coord a(1, 2, 3);
+        coord b(4, 6, 5);
+
+        string s1 = "(1,2,3)";
+        string s2 = "(4,6,5)";
+
+        CPPUNIT_ASSERT_EQUAL( s1, a.toString() );
+        CPPUNIT_ASSERT_EQUAL( s2, b.toString() );
+
+        CPPUNIT_ASSERT_EQUAL( 1.0*4+2*6+3*5,  a.dot(b) );
+        CPPUNIT_ASSERT_EQUAL( 1.0*4+2*6+3*5,  b.dot(a) );
     }
 };
 

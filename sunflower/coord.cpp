@@ -111,6 +111,22 @@ std::string coord::toString() {
   return a;
 }
 
+bool coord::operator==(const coord& cod) {
+  if(
+      fabs(this->v[0] - cod.v[0])
+     +fabs(this->v[1] - cod.v[1])
+     +fabs(this->v[2] - cod.v[2])
+     <= 1.0E-10) {  // TODO: 共通化して目的毎に変えれるようにしないとだめかなぁ。それと絶対・相対誤差はどうするか・・やっぱ後だ！
+     return true;
+  }
+  
+  return false;
+}
+
+bool coord::operator!=(const coord& cod) {
+  return !(*this == cod);
+}
+
 #define sq(x) ((x)*(x))
 
 double coord::length() {
