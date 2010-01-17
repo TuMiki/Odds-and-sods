@@ -21,6 +21,7 @@ class coord {
   public:
     coord(int dim); // 指定した次元で座標を生成
     coord(double x, double y);  // 2次元で座標を生成
+    coord(double x, double y, double z);  // 3次元で座標を生成
     coord(const coord& cod);  // 指定した座標をコピーして生成
     ~coord();  // デストラクタ
 

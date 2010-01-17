@@ -21,6 +21,13 @@ coord::coord(double x, double y) {
   v[2] = 0;
 }
 
+coord::coord(double x, double y, double z) {
+  dim = 3;
+  v[0] = x;
+  v[1] = y;
+  v[2] = z;
+}
+
 coord::coord(const coord& cod) {
   dim = cod.dim;
   v[2] = 0;
