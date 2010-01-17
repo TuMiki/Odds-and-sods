@@ -47,4 +47,7 @@ coord operator*(const double a, const coord& b);
 
 std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, coord cod);
 
+// 直線を始点と方向ベクトルで表現
+coord intersect(const coord posA, const coord vecA, const coord posB, const coord vecB);
+
 #endif

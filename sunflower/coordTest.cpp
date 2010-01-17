@@ -29,6 +29,8 @@ class coordTest : public CPPUNIT_NS::TestFixture {
 
         CPPUNIT_TEST(length_Test);
         CPPUNIT_TEST(dot_Test);
+
+        CPPUNIT_TEST(intersect_Test);
         
     CPPUNIT_TEST_SUITE_END();
 
@@ -290,6 +292,16 @@ protected:
 
         CPPUNIT_ASSERT_EQUAL( 1.0*4+2*6+3*5,  a.dot(b) );
         CPPUNIT_ASSERT_EQUAL( 1.0*4+2*6+3*5,  b.dot(a) );
+    }
+
+    void intersect_Test() {
+        coord posA(0, 0, 0);
+        coord vecA(4, 6, 5);
+        coord posB(0, 0, 0);
+        coord vecB(4, 6, 5);
+        coord posC(1, 0, 0);
+
+        CPPUNIT_ASSERT( posC == intersect(posA, vecA, posB, vecB) );
     }
 };
 

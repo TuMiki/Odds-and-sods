@@ -145,3 +145,15 @@ coord operator*(const double a, const coord& b) {
 std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, coord cod) {
   return o << cod.toString();
 }
+
+// TODO: 交点が無かったら・・・どうしよう。
+// 交点が無い条件
+// 　直線Aと直線Bが平行。この時は同一直線上の場合も含むか？（この場合はある意味交点は無数に存在する）
+// 　直線Aと直線Bがねじれの位置（3次元）
+// 　交点はあるが、直線Aまたは直線Bの区間上に存在しない
+coord intersect(const coord posA, const coord vecA, const coord posB, const coord vecB) {
+    coord tmp(posA);
+
+    return tmp;
+}
+
