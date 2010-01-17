@@ -3,14 +3,14 @@
 #include <iostream>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include "coord.h"
+#include "gvector.h"
 
 using std::string;
 using std::cout;
 using std::endl;
 
-class coordTest : public CPPUNIT_NS::TestFixture {
-    CPPUNIT_TEST_SUITE(coordTest);
+class gvectorTest : public CPPUNIT_NS::TestFixture {
+    CPPUNIT_TEST_SUITE(gvectorTest);
         // TODO: 対象の関数名をここに記述して、定義を下で記述している。この場所で直接関数を定義できないものか調査
         CPPUNIT_TEST(constructor_2d_Test);
         CPPUNIT_TEST(constructor_3d_Test);
@@ -42,29 +42,29 @@ public:
 protected:
     // 
     void constructor_2d_Test() {
-        coord a(2);
+        gvector a(2);
         string s = "(0,0)";
 
         CPPUNIT_ASSERT_EQUAL( s, a.toString() );
     }
 
     void constructor_3d_Test() {
-        coord a(3);
+        gvector a(3);
         string s = "(0,0,0)";
 
         CPPUNIT_ASSERT_EQUAL( s, a.toString() );
     }
 
     void constructor_2d_set_Test() {
-        coord a(2, 3);
+        gvector a(2, 3);
         string s = "(2,3)";
 
         CPPUNIT_ASSERT_EQUAL( s, a.toString() );
     }
 
     void constructor_2d_copy_Test() {
-        coord a(3, 4);
-        coord b(a);
+        gvector a(3, 4);
+        gvector b(a);
 
         string s = "(3,4)";
 
@@ -73,8 +73,8 @@ protected:
     }
 
     void operator_assign_2d_Test() {
-        coord a(2, 3);
-        coord b(2);
+        gvector a(2, 3);
+        gvector b(2);
 
         string s1 = "(2,3)";
         string s2 = "(0,0)";
@@ -89,10 +89,10 @@ protected:
     }
 
     void operator_add_2d_Test() {
-        coord a(2, 3);
-        coord b(4, 5);
-        coord c(2);
-        coord d(2);
+        gvector a(2, 3);
+        gvector b(4, 5);
+        gvector c(2);
+        gvector d(2);
 
         string s1 = "(2,3)";
         string s2 = "(4,5)";
@@ -120,10 +120,10 @@ protected:
     }
 
     void operator_subtract_2d_Test() {
-        coord a(3, 5);
-        coord b(1, 2);
-        coord c(2);
-        coord d(2);
+        gvector a(3, 5);
+        gvector b(1, 2);
+        gvector c(2);
+        gvector d(2);
 
         string s1 = "(3,5)";
         string s2 = "(1,2)";
@@ -152,8 +152,8 @@ protected:
     }
 
     void operator_negative_2d_Test() {
-        coord a(3, 5);
-        coord c(2);
+        gvector a(3, 5);
+        gvector c(2);
 
         string s1 = "(3,5)";
         string s3 = "(0,0)";
@@ -169,10 +169,10 @@ protected:
     }
 
     void operator_multiply_2d_Test() {
-        coord a(3, 5);
+        gvector a(3, 5);
         double b = 2;
-        coord c(2);
-        coord d(2);
+        gvector c(2);
+        gvector d(2);
 
         string s1 = "(3,5)";
         double d2 = 2;
@@ -200,11 +200,11 @@ protected:
     }
 
     void operator_exterior_Test() {
-        coord a(1, 2, 3);
-        coord b(4, 6, 5);
-        coord c(3);
-        coord d(3);
-        coord e(3);
+        gvector a(1, 2, 3);
+        gvector b(4, 6, 5);
+        gvector c(3);
+        gvector d(3);
+        gvector e(3);
 
         string s1 = "(1,2,3)";
         string s2 = "(4,6,5)";
@@ -243,9 +243,9 @@ protected:
     }
 
     void operator_equals_Test() {
-        coord a(1, 2, 3);
-        coord b(a);
-        coord c(1,0,0);
+        gvector a(1, 2, 3);
+        gvector b(a);
+        gvector c(1,0,0);
 
         string s1 = "(1,2,3)";
         string s3 = "(0,0,0)";
@@ -264,7 +264,7 @@ protected:
     }
 
     void length_Test() {
-        coord a(1, 2, 3);
+        gvector a(1, 2, 3);
         double c = 0;
 
         string s1 = "(1,2,3)";
@@ -281,8 +281,8 @@ protected:
     }
 
     void dot_Test() {
-        coord a(1, 2, 3);
-        coord b(4, 6, 5);
+        gvector a(1, 2, 3);
+        gvector b(4, 6, 5);
 
         string s1 = "(1,2,3)";
         string s2 = "(4,6,5)";
@@ -295,17 +295,17 @@ protected:
     }
 
     void intersect_Test() {
-        coord posA(0, 0, 0);
-        coord vecA(4, 6, 5);
-        coord posB(0, 0, 0);
-        coord vecB(4, 6, 5);
-        coord posC(1, 0, 0);
+        gvector posA(0, 0, 0);
+        gvector vecA(4, 6, 5);
+        gvector posB(0, 0, 0);
+        gvector vecB(4, 6, 5);
+        gvector posC(1, 0, 0);
 
         CPPUNIT_ASSERT( posC == intersect(posA, vecA, posB, vecB) );
     }
 };
 
-CPPUNIT_TEST_SUITE_REGISTRATION(coordTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(gvectorTest);
 
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/CompilerOutputter.h>
