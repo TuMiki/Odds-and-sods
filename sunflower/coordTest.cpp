@@ -15,7 +15,10 @@ class coordTest : public CPPUNIT_NS::TestFixture {
         CPPUNIT_TEST(constractor_2d_set_Test);
         CPPUNIT_TEST(constractor_2d_copy_Test);
 
-        CPPUNIT_TEST(constractor_2d_assign_Test);
+        CPPUNIT_TEST(operator_assign_2d_Test);
+
+        CPPUNIT_TEST(operator_add_2d_Test);
+        
     CPPUNIT_TEST_SUITE_END();
 
 private:
@@ -55,7 +58,7 @@ protected:
         CPPUNIT_ASSERT_EQUAL( s, b.toString() );
     }
 
-    void constractor_2d_assign_Test() {
+    void operator_assign_2d_Test() {
         coord a(2, 3);
         coord b(2);
 
@@ -69,6 +72,37 @@ protected:
 
         CPPUNIT_ASSERT_EQUAL( s1, a.toString() );
         CPPUNIT_ASSERT_EQUAL( s1, b.toString() );
+    }
+
+    void operator_add_2d_Test() {
+        coord a(2, 3);
+        coord b(4, 5);
+        coord c(2);
+        coord d(2);
+
+        string s1 = "(2,3)";
+        string s2 = "(4,5)";
+        string s3 = "(0,0)";
+        string s4 = "(6,8)";
+
+        CPPUNIT_ASSERT_EQUAL( s1, a.toString() );
+        CPPUNIT_ASSERT_EQUAL( s2, b.toString() );
+        CPPUNIT_ASSERT_EQUAL( s3, c.toString() );
+        CPPUNIT_ASSERT_EQUAL( s3, d.toString() );
+
+        c = a + b;
+
+        CPPUNIT_ASSERT_EQUAL( s1, a.toString() );
+        CPPUNIT_ASSERT_EQUAL( s2, b.toString() );
+        CPPUNIT_ASSERT_EQUAL( s4, c.toString() );
+        CPPUNIT_ASSERT_EQUAL( s3, d.toString() );
+
+        d = b + a;
+
+        CPPUNIT_ASSERT_EQUAL( s1, a.toString() );
+        CPPUNIT_ASSERT_EQUAL( s2, b.toString() );
+        CPPUNIT_ASSERT_EQUAL( s4, c.toString() );
+        CPPUNIT_ASSERT_EQUAL( s4, d.toString() );
     }
 };
 
