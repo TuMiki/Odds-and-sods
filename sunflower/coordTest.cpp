@@ -10,6 +10,7 @@ using std::endl;
 
 class coordTest : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST_SUITE(coordTest);
+        // TODO: 対象の関数名をここに記述して、定義を下で記述している。この場所で直接関数を定義できないものか調査
         CPPUNIT_TEST(constractor_2d_Test);
         CPPUNIT_TEST(constractor_3d_Test);
         CPPUNIT_TEST(constractor_2d_set_Test);
@@ -18,6 +19,7 @@ class coordTest : public CPPUNIT_NS::TestFixture {
         CPPUNIT_TEST(operator_assign_2d_Test);
 
         CPPUNIT_TEST(operator_add_2d_Test);
+        CPPUNIT_TEST(operator_subtract_2d_Test);
         
     CPPUNIT_TEST_SUITE_END();
 
@@ -104,13 +106,43 @@ protected:
         CPPUNIT_ASSERT_EQUAL( s4, c.toString() );
         CPPUNIT_ASSERT_EQUAL( s4, d.toString() );
     }
+
+    void operator_subtract_2d_Test() {
+        coord a(3, 5);
+        coord b(1, 2);
+        coord c(2);
+        coord d(2);
+
+        string s1 = "(3,5)";
+        string s2 = "(1,2)";
+        string s3 = "(0,0)";
+        string s4 = "(2,3)";
+        string s5 = "(-2,-3)";
+
+        CPPUNIT_ASSERT_EQUAL( s1, a.toString() );
+        CPPUNIT_ASSERT_EQUAL( s2, b.toString() );
+        CPPUNIT_ASSERT_EQUAL( s3, c.toString() );
+        CPPUNIT_ASSERT_EQUAL( s3, d.toString() );
+
+        c = a - b;
+
+        CPPUNIT_ASSERT_EQUAL( s1, a.toString() );
+        CPPUNIT_ASSERT_EQUAL( s2, b.toString() );
+        CPPUNIT_ASSERT_EQUAL( s4, c.toString() );
+        CPPUNIT_ASSERT_EQUAL( s3, d.toString() );
+
+        d = b - a;
+
+        CPPUNIT_ASSERT_EQUAL( s1, a.toString() );
+        CPPUNIT_ASSERT_EQUAL( s2, b.toString() );
+        CPPUNIT_ASSERT_EQUAL( s4, c.toString() );
+        CPPUNIT_ASSERT_EQUAL( s5, d.toString() );
+    }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(coordTest);
 
 /*
-
-        std::cout << "■ coord operator+(const coord& cod); // coord + coord" << std::endl;
         std::cout << "■ coord operator-(const coord& cod); // coord - coord" << std::endl;
         std::cout << "■ coord operator-(); // - coord" << std::endl;
         std::cout << "■ coord operator*(double a); // coord * double" << std::endl;
