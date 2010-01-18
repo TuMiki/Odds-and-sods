@@ -37,6 +37,7 @@ class gvector {
 
     double length();
     double dot(const gvector& cod); // 内積
+    gvector unit(); // 単位ベクトル化
 
     std::string toString();
 };
@@ -47,6 +48,9 @@ gvector operator*(const double a, const gvector& b);
 //bool operator==(const gvector& va, const gvector& vb); // 比較
 
 std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, gvector cod);
+
+// 垂線の足を求める
+gvector footOfAPerpendicular(gvector pos, gvector posA, gvector vecA);
 
 // 直線を始点と方向ベクトルで表現
 gvector intersect(gvector posA, gvector vecA, gvector posB, gvector vecB);

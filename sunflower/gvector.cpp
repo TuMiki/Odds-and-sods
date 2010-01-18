@@ -136,6 +136,24 @@ double gvector::dot(const gvector& cod) {
   return this->v[0] * cod.v[0] + this->v[1] * cod.v[1] + this->v[2] * cod.v[2];
 }
 
+gvector gvector::unit() {
+  double  eps = 1.0E-10;
+  double l = this->length();
+
+  gvector p(*this);
+
+  if(l > eps) {
+    p.v[0] /= l;
+    p.v[1] /= l;
+    p.v[2] /= l;
+  } else {
+    p.v[0] = 0;
+    p.v[1] = 0;
+    p.v[2] = 0;
+  }
+  return p;
+}
+
 gvector operator*(const double a, const gvector& b) {
   gvector tmp(b);
   return tmp * a;
@@ -147,6 +165,22 @@ gvector operator*(const double a, const gvector& b) {
 
 std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, gvector cod) {
   return o << cod.toString();
+}
+
+// 垂線の足を求める
+gvector footOfAPerpendicular(gvector pos, gvector posA, gvector vecA) {
+  gvector va(vecA.unit());
+
+  // 点と直線を含む平面に垂直なベクトルと直線のベクトルの外積を求める。
+  gvector v(((pos - posA) * va) * va);
+  v = v.unit();
+
+  // 点から垂線の足までの長さを求める
+  double t = ((posA - pos) * va) .length();
+
+  gvector p(pos + v * t);
+
+  return p;
 }
 
 // TODO: 交点が無かったら・・・どうしよう。
