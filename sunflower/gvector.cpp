@@ -111,12 +111,13 @@ std::string gvector::toString() {
   return a;
 }
 
-bool gvector::operator==(const gvector& cod) {
+bool gvector::operator==(const gvector& vec) {
+  double eps = 1.0E-10;
   if(
-      fabs(this->v[0] - cod.v[0])
-     +fabs(this->v[1] - cod.v[1])
-     +fabs(this->v[2] - cod.v[2])
-     <= 1.0E-10) {  // TODO: 共通化して目的毎に変えれるようにしないとだめかなぁ。それと絶対・相対誤差はどうするか・・やっぱ後だ！
+      fabs(this->v[0] - vec.v[0])
+     +fabs(this->v[1] - vec.v[1])
+     +fabs(this->v[2] - vec.v[2])
+     <= eps) {  // TODO: 共通化して目的毎に変えれるようにしないとだめかなぁ。それと絶対・相対誤差はどうするか・・やっぱ後だ！
      return true;
   }
   
@@ -129,9 +130,7 @@ bool gvector::operator!=(const gvector& cod) {
 
 #define sq(x) ((x)*(x))
 
-double gvector::length() {
-  return sqrt(sq(this->v[0]) + sq(this->v[1]) + sq(this->v[2]));
-}
+double gvector::length() { return sqrt(sq(this->v[0]) + sq(this->v[1]) + sq(this->v[2])); }
 
 double gvector::dot(const gvector& cod) {
   return this->v[0] * cod.v[0] + this->v[1] * cod.v[1] + this->v[2] * cod.v[2];
@@ -142,6 +141,10 @@ gvector operator*(const double a, const gvector& b) {
   return tmp * a;
 }
 
+//bool operator==(const gvector& va, const gvector& vb) {
+//  return va==vb;
+//}
+
 std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, gvector cod) {
   return o << cod.toString();
 }
@@ -151,9 +154,28 @@ std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, gvector cod) {
 // 　直線Aと直線Bが平行。この時は同一直線上の場合も含むか？（この場合はある意味交点は無数に存在する）
 // 　直線Aと直線Bがねじれの位置（3次元）
 // 　交点はあるが、直線Aまたは直線Bの区間上に存在しない
-gvector intersect(const gvector posA, const gvector vecA, const gvector posB, const gvector vecB) {
+gvector intersect(gvector posA, gvector vecA, gvector posB, gvector vecB) {
+    double  eps = 1.0E-10;
+
     gvector tmp(posA);
 
+    // 直線Aと直線Bの方向ベクトルの外積をとって、大きさが0なら平行
+    if((vecA * vecB).length()<=eps) {
+        // 平行
+        // 直線Aの始点から直線Bの始点へ伸ばしたベクトルと直線Bのベクトルの外積が0なら同一直線上にある
+        if(((posB - posA) * vecB).length()<=eps) {
+            // 同一直線上
+            // あとは双方の区間の調査かな
+        } else {
+            // 平行
+        }
+    } else {
+        // 平行ではない
+        // 2直線が同一平面上にあるか？
+        // 垂線の足を求める
+        // 後は長さをピタゴラスの方程式で求めて、ベクトル加算かなぁ。
+        // 最後は双方の区間に乗っているか調査
+    }
     return tmp;
 }
 

@@ -5,49 +5,50 @@
 #include <iostream>
 
 /*
- * À•W‚ğˆµ‚¤‚½‚ß‚Ìclass.
- * vector‚Æ‚µ‚½‚¢‚Æ‚±‚ë‚¾‚ªAƒRƒ“ƒeƒiƒNƒ‰ƒX‚É“¯–¼‚ª‚ ‚é‚½‚ßAcoord‚Æ‚µ‚½
+ * åº§æ¨™ã‚’æ‰±ã†ãŸã‚ã®class.
+ * vectorã¨ã—ãŸã„ã¨ã“ã‚ã ãŒã€ã‚³ãƒ³ãƒ†ãƒŠã‚¯ãƒ©ã‚¹ã«åŒåãŒã‚ã‚‹ãŸã‚ã€gvectorã¨ã—ãŸ
  */
 class gvector {
   protected:
-    /* ˆÈ‰º‚Ì•Ï”éŒ¾‚ÍÀ‘•‚ÉŠÖ‚µ‚Ä‚¢‚é‚½‚ß‰B‚µ‚½‚¢‚Æ‚±‚ëB
-     * C++‚¾‚Æƒwƒbƒ_[ƒtƒ@ƒCƒ‹‚É‘‚¢‚½ƒNƒ‰ƒX’è‹`‚ªŒöŠJ‚Æ‚È‚é‚Ì‚Å’Êí‚¾‚Æ‰B‚¹‚È‚¢
-     * ‘€ìEQÆ‚Í‚Å‚«‚È‚¢‚Ì‚¾‚¯‚ÇAÀ‘•‚Ì•ÏX‚ª•Ï”‚É‹y‚ñ‚¾‚Æ‚«‚É
-     * ƒwƒbƒ_[ƒtƒ@ƒCƒ‹‚ğ•ÏX‚·‚é‚Ì‚ÍA‹C‚¿‚ªˆ«‚¢
+    /* ä»¥ä¸‹ã®å¤‰æ•°å®£è¨€ã¯å®Ÿè£…ã«é–¢ã—ã¦ã„ã‚‹ãŸã‚éš ã—ãŸã„ã¨ã“ã‚ã€‚
+     * C++ã ã¨ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ã„ãŸã‚¯ãƒ©ã‚¹å®šç¾©ãŒå…¬é–‹ã¨ãªã‚‹ã®ã§é€šå¸¸ã ã¨éš ã›ãªã„
+     * æ“ä½œãƒ»å‚ç…§ã¯ã§ããªã„ã®ã ã‘ã©ã€å®Ÿè£…ã®å¤‰æ›´ãŒå¤‰æ•°ã«åŠã‚“ã ã¨ãã«
+     * ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å¤‰æ›´ã™ã‚‹ã®ã¯ã€æ°—æŒã¡ãŒæ‚ªã„
      */
     int dim;
     double v[3];
 
   public:
-    gvector(int dim); // w’è‚µ‚½ŸŒ³‚ÅÀ•W‚ğ¶¬
-    gvector(double x, double y);  // 2ŸŒ³‚ÅÀ•W‚ğ¶¬
-    gvector(double x, double y, double z);  // 3ŸŒ³‚ÅÀ•W‚ğ¶¬
-    gvector(const gvector& cod);  // w’è‚µ‚½À•W‚ğƒRƒs[‚µ‚Ä¶¬
-    ~gvector();  // ƒfƒXƒgƒ‰ƒNƒ^
+    gvector(int dim); // æŒ‡å®šã—ãŸæ¬¡å…ƒã§åº§æ¨™ã‚’ç”Ÿæˆ
+    gvector(double x, double y);  // 2æ¬¡å…ƒã§åº§æ¨™ã‚’ç”Ÿæˆ
+    gvector(double x, double y, double z);  // 3æ¬¡å…ƒã§åº§æ¨™ã‚’ç”Ÿæˆ
+    gvector(const gvector& cod);  // æŒ‡å®šã—ãŸåº§æ¨™ã‚’ã‚³ãƒ”ãƒ¼ã—ã¦ç”Ÿæˆ
+    ~gvector();  // ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 
-    gvector& operator=(const gvector& cod); // gvector = gvectorB–ß‚è’l‚ªQÆI
+    gvector& operator=(const gvector& cod); // gvector = gvectorã€‚æˆ»ã‚Šå€¤ãŒå‚ç…§ï¼
     gvector operator+(const gvector& cod); // gvector + gvector
     gvector operator-(const gvector& cod); // gvector - gvector
     gvector operator-(); // - gvector
     gvector operator*(double a); // gvector * double
-    gvector operator*(const gvector& cod); // ŠOÏ
+    gvector operator*(const gvector& cod); // å¤–ç©
 
-    bool operator==(const gvector& cod); // ”äŠr
-    bool operator!=(const gvector& cod); // ”äŠr
+    bool operator==(const gvector& cod); // æ¯”è¼ƒ
+    bool operator!=(const gvector& cod); // æ¯”è¼ƒ
 
     double length();
-    double dot(const gvector& cod); // “àÏ
+    double dot(const gvector& cod); // å†…ç©
 
     std::string toString();
 };
 
-// 2€‰‰Zq‚Å¶‘¤‚ª gvector ˆÈŠO‚Ìê‡‚ÍA’Êí‚ÌŠÖ”‚Æ‚µ‚Ä‰‰Zq‚ğƒI[ƒo[ƒ[ƒh‚·‚é
-// double * gvector ‚ğ‰ğß‚·‚é
+// 2é …æ¼”ç®—å­ã§å·¦å´ãŒ gvector ä»¥å¤–ã®å ´åˆã¯ã€é€šå¸¸ã®é–¢æ•°ã¨ã—ã¦æ¼”ç®—å­ã‚’ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
+// double * gvector ã‚’è§£é‡ˆã™ã‚‹
 gvector operator*(const double a, const gvector& b);
+//bool operator==(const gvector& va, const gvector& vb); // æ¯”è¼ƒ
 
 std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, gvector cod);
 
-// ’¼ü‚ğn“_‚Æ•ûŒüƒxƒNƒgƒ‹‚Å•\Œ»
-gvector intersect(const gvector posA, const gvector vecA, const gvector posB, const gvector vecB);
+// ç›´ç·šã‚’å§‹ç‚¹ã¨æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã§è¡¨ç¾
+gvector intersect(gvector posA, gvector vecA, gvector posB, gvector vecB);
 
 #endif
