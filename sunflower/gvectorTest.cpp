@@ -302,6 +302,8 @@ protected:
         gvector posC(1, 0, 0);
 
         CPPUNIT_ASSERT( posC == intersect(posA, vecA, posB, vecB) );
+        // TODO: 以下の形式で実行出きるようにしたい！
+        // CPPUNIT_ASSERT_EQUAL( posC, intersect(posA, vecA, posB, vecB) );
     }
 };
 
