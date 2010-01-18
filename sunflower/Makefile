@@ -14,9 +14,9 @@ gvectorTest : gvectorTest.o gvector.o
 	gcc -o $@ $^ $(LFLAGS) -lcppunit
 
 sunflower.o : sunflower.cpp drawUtil.h
-coordTest.o : coordTest.cpp
+gvectorTest.o : gvectorTest.cpp gvector.h
 
 gvector.o : gvector.cpp gvector.h
 
 clean:
-	rm *.o *~
+	rm -f *.o *~
