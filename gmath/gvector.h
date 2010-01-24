@@ -58,6 +58,6 @@ std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, gvector cod);
 gvector footOfAPerpendicular(gvector pos, gvector posA, gvector vecA);
 
 // 直線を始点と方向ベクトルで表現
-gvector intersect(gvector posA, gvector vecA, gvector posB, gvector vecB);
+gvector intersect(gvector& posA, gvector& vecA, gvector& posB, gvector& vecB);
 
 #endif

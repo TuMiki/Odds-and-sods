@@ -30,7 +30,7 @@ gvector::gvector(double x, double y, double z) {
 
 gvector::gvector(const gvector& cod) {
   this->dim = cod.dim;
-  this->v[3] = 0;
+  this->v[2] = 0;
   for(int i=0; i < this->dim; i++) {
     this->v[i] = cod.v[i];
   }
@@ -45,7 +45,7 @@ gvector::~gvector() {
 
 gvector& gvector::operator=(const gvector& cod) {
   this->dim = cod.dim;
-  this->v[3] = 0;
+  this->v[2] = 0;
   for(int i=0; i < this->dim; i++) {
     this->v[i] = cod.v[i];
   }
@@ -174,6 +174,7 @@ std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, gvector cod) {
 }
 
 // 垂線の足を求める
+// TODO: 外積を用いて計算しているが、X-Y平面限定だと、もう少し計算量を減らすことができる
 gvector footOfAPerpendicular(gvector pos, gvector posA, gvector vecA) {
   gvector va(vecA.unit());
   gvector p(pos - posA);
@@ -195,11 +196,16 @@ gvector footOfAPerpendicular(gvector pos, gvector posA, gvector vecA) {
 // 　直線Aと直線Bが平行。この時は同一直線上の場合も含むか？（この場合はある意味交点は無数に存在する）
 // 　直線Aと直線Bがねじれの位置（3次元）
 // 　交点はあるが、直線Aまたは直線Bの区間上に存在しない
-gvector intersect(gvector posA, gvector vecA, gvector posB, gvector vecB) {
-    double  eps = 1.0E-10;
+gvector intersect(gvector& posA, gvector& vecA, gvector& posB, gvector& vecB) {
+  double  eps = 1.0E-10;
 
-    gvector tmp(posA);
+  gvector va(vecA.unit());
 
+  double t;
+
+  t = ((posB - posA ) * vecB ).length() / ( va * vecB ).length();
+  gvector pos(posA + va * t);
+/*
     // 直線Aと直線Bの方向ベクトルの外積をとって、大きさが0なら平行
     if((vecA * vecB).length()<=eps) {
         // 平行
@@ -217,6 +223,7 @@ gvector intersect(gvector posA, gvector vecA, gvector posB, gvector vecB) {
         // 後は長さをピタゴラスの方程式で求めて、ベクトル加算かなぁ。
         // 最後は双方の区間に乗っているか調査
     }
-    return tmp;
+*/
+    return pos;
 }
 
