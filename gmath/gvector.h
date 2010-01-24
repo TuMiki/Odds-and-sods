@@ -39,6 +39,11 @@ class gvector {
     double dot(const gvector& cod); // 内積
     gvector unit(); // 単位ベクトル化
 
+    double getX() { return v[0]; }
+    double getY() { return v[1]; }
+    // TODO: 変数にコピーして返さないと安全じゃないよなぁ
+    double* get() { return this->v; };
+    
     std::string toString();
 };
 

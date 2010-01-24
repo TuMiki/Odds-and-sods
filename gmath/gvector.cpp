@@ -7,32 +7,32 @@
  * コンストラクタ
  */
 gvector::gvector(int n) {
-  dim = n;
-  v[2] = 0;
-  for(int i=0; i < dim; i++) {
-    v[i] = 0;
+  this->dim = n;
+  this->v[2] = 0;
+  for(int i=0; i < this->dim; i++) {
+    this->v[i] = 0;
   }
 }
 
 gvector::gvector(double x, double y) {
-  dim = 2;
-  v[0] = x;
-  v[1] = y;
-  v[2] = 0;
+  this->dim = 2;
+  this->v[0] = x;
+  this->v[1] = y;
+  this->v[2] = 0;
 }
 
 gvector::gvector(double x, double y, double z) {
-  dim = 3;
-  v[0] = x;
-  v[1] = y;
-  v[2] = z;
+  this->dim = 3;
+  this->v[0] = x;
+  this->v[1] = y;
+  this->v[2] = z;
 }
 
 gvector::gvector(const gvector& cod) {
-  dim = cod.dim;
-  v[2] = 0;
-  for(int i=0; i < dim; i++) {
-    v[i] = cod.v[i];
+  this->dim = cod.dim;
+  this->v[3] = 0;
+  for(int i=0; i < this->dim; i++) {
+    this->v[i] = cod.v[i];
   }
 }
 
@@ -44,10 +44,10 @@ gvector::~gvector() {
 }
 
 gvector& gvector::operator=(const gvector& cod) {
-  dim = cod.dim;
-  v[2] = 0;
-  for(int i=0; i < dim; i++) {
-    v[i] = cod.v[i];
+  this->dim = cod.dim;
+  this->v[3] = 0;
+  for(int i=0; i < this->dim; i++) {
+    this->v[i] = cod.v[i];
   }
 
   return *this;
@@ -95,17 +95,19 @@ gvector gvector::operator*(const gvector& cod) {
 
 std::string gvector::toString() {
   std::string a;
-  char tmp[256];
+  char tmp1[256];
+  char tmp2[256];
 
-  a = "(";
-  sprintf(tmp, "%lg", this->v[0]);
-  a += std::string(tmp);
-  a += ",";
-  sprintf(tmp, "%lg", this->v[1]);
-  a += std::string(tmp);
+  snprintf(tmp1, sizeof(tmp1)-1, "%lg", this->v[0]);
+  snprintf(tmp2, sizeof(tmp2)-1, "%lg", this->v[1]);
+  a  = std::string("(")
+     + std::string(tmp1)
+     + std::string(",")
+     + std::string(tmp2)
+     ;
   if(this->dim==3) {
-    sprintf(tmp, "%lg", this->v[2]);
-    a += std::string(",") + std::string(tmp);
+    snprintf(tmp1, sizeof(tmp1)-1, "%lg", this->v[2]);
+    a += std::string(",") + std::string(tmp1);
   }
   a += ")";
   return a;
@@ -133,7 +135,9 @@ bool gvector::operator!=(const gvector& cod) {
 double gvector::length() { return sqrt(sq(this->v[0]) + sq(this->v[1]) + sq(this->v[2])); }
 
 double gvector::dot(const gvector& cod) {
-  return this->v[0] * cod.v[0] + this->v[1] * cod.v[1] + this->v[2] * cod.v[2];
+  return this->v[0] * cod.v[0]
+       + this->v[1] * cod.v[1]
+       + this->v[2] * cod.v[2];
 }
 
 gvector gvector::unit() {
@@ -142,15 +146,17 @@ gvector gvector::unit() {
 
   gvector p(*this);
 
-  if(l > eps) {
-    p.v[0] /= l;
-    p.v[1] /= l;
-    p.v[2] /= l;
-  } else {
+  if(l <= eps) {
     p.v[0] = 0;
     p.v[1] = 0;
     p.v[2] = 0;
+    return p;
   }
+
+  p.v[0] /= l;
+  p.v[1] /= l;
+  p.v[2] /= l;
+
   return p;
 }
 
@@ -170,15 +176,16 @@ std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, gvector cod) {
 // 垂線の足を求める
 gvector footOfAPerpendicular(gvector pos, gvector posA, gvector vecA) {
   gvector va(vecA.unit());
+  gvector p(pos - posA);
 
   // 点と直線を含む平面に垂直なベクトルと直線のベクトルの外積を求める。
-  gvector v(((pos - posA) * va) * va);
+  gvector v((p * va) * va);
   v = v.unit();
 
   // 点から垂線の足までの長さを求める
-  double t = ((posA - pos) * va) .length();
+  double t = (p * va) .length();
 
-  gvector p(pos + v * t);
+  p =  pos + v * t;
 
   return p;
 }
