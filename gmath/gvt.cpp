@@ -1,6 +1,7 @@
 #include <iostream>
 #include <GL/glut.h>
-#include "gvector.h"
+
+#include "gline.h"
 
 using std::cout;
 using std::endl;
@@ -12,7 +13,7 @@ gvector offset2(-m_size, m_size);
 gvector offset3(-m_size,-m_size);
 gvector offset4( m_size,-m_size);
 
-void drawPoint(gvector& pos) {
+void drawPoint(gvector pos) {
   glBegin(GL_LINE_LOOP);
     glColor3d(1.0, 1.0, 1.0);
     glVertex2dv(((pos + offset1) * d).get());
@@ -22,13 +23,13 @@ void drawPoint(gvector& pos) {
   glEnd();
 }
 
-void drawLine(gvector& pos, gvector& vec) {
+void drawLine(gline& lin) {
   glBegin(GL_LINE_STRIP);
     glColor3d(1.0, 1.0, 1.0);
-    glVertex2dv((pos * d).get());
-    glVertex2dv(((pos + vec) * d).get());
+    glVertex2dv((lin.getPos() * d).get());
+    glVertex2dv(((lin.getPos() + lin.getVec()) * d).get());
   glEnd();
-  drawPoint(pos);
+  drawPoint(lin.getPos());
 }
 
 void initGVector(void) {
@@ -37,21 +38,25 @@ void initGVector(void) {
   gvector lineA_vec(3, 2);
   gvector retPos1(3);
 
-  retPos1 = footOfAPerpendicular(posA, lineA_pos, lineA_vec);
+  gline   linA(lineA_pos, lineA_vec);
 
-  drawLine(lineA_pos, lineA_vec);
+  retPos1 = footOfAPerpendicular(posA, linA);
+
+  drawLine(linA);
   drawPoint(posA);
   drawPoint(retPos1);
 
   gvector lineB_pos(4, 5);
   gvector lineB_vec(-3, 3);
+  gline   linB(lineB_pos, lineB_vec);
+
   gvector retPos2(3);
 
-  retPos2 = intersect(lineA_pos, lineA_vec, lineB_pos, lineB_vec);
+  retPos2 = intersect(linA, linB);
 
   cout << "retPos2" << retPos2 << endl;
 
-  drawLine(lineB_pos, lineB_vec);
+  drawLine(linB);
   drawPoint(retPos2);
 }
 

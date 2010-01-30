@@ -30,8 +30,8 @@ class gvectorTest : public CPPUNIT_NS::TestFixture {
         CPPUNIT_TEST(length_Test);
         CPPUNIT_TEST(dot_Test);
 
-        CPPUNIT_TEST(footOfAPerpendicular_Test);
-        CPPUNIT_TEST(intersect_Test);
+//        CPPUNIT_TEST(footOfAPerpendicular_Test);
+//        CPPUNIT_TEST(intersect_Test);
         
     CPPUNIT_TEST_SUITE_END();
 
@@ -294,7 +294,7 @@ protected:
         CPPUNIT_ASSERT_EQUAL( 1.0*4+2*6+3*5,  a.dot(b) );
         CPPUNIT_ASSERT_EQUAL( 1.0*4+2*6+3*5,  b.dot(a) );
     }
-
+/*
     void footOfAPerpendicular_Test() {
         gvector pos(1, 1, 1);
         gvector posA(0, 0, 0);
@@ -315,6 +315,7 @@ protected:
         // TODO: 以下の形式で実行出きるようにしたい！
         // CPPUNIT_ASSERT_EQUAL( posC, intersect(posA, vecA, posB, vecB) );
     }
+*/
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(gvectorTest);

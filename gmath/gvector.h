@@ -19,6 +19,7 @@ class gvector {
     double v[3];
 
   public:
+    gvector() { this->dim=2; this->v[0] = 0; this->v[1] = 0; this->v[2]=0; };
     gvector(int dim); // 指定した次元で座標を生成
     gvector(double x, double y);  // 2次元で座標を生成
     gvector(double x, double y, double z);  // 3次元で座標を生成
@@ -31,6 +32,7 @@ class gvector {
     gvector operator-(); // - gvector
     gvector operator*(double a); // gvector * double
     gvector operator*(const gvector& cod); // 外積
+    gvector operator/(double a); // gvector / double
 
     bool operator==(const gvector& cod); // 比較
     bool operator!=(const gvector& cod); // 比較
@@ -53,11 +55,5 @@ gvector operator*(const double a, const gvector& b);
 //bool operator==(const gvector& va, const gvector& vb); // 比較
 
 std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, gvector cod);
-
-// 垂線の足を求める
-gvector footOfAPerpendicular(gvector pos, gvector posA, gvector vecA);
-
-// 直線を始点と方向ベクトルで表現
-gvector intersect(gvector& posA, gvector& vecA, gvector& posB, gvector& vecB);
 
 #endif

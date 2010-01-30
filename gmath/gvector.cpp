@@ -76,6 +76,7 @@ gvector gvector::operator-() {
   }
   return tmp;
 }
+
 gvector gvector::operator*(double a) {
   gvector tmp(*this);
   tmp.v[0] *= a;
@@ -90,6 +91,14 @@ gvector gvector::operator*(const gvector& cod) {
   tmp.v[0] = this->v[1]*cod.v[2] - this->v[2]*cod.v[1];
   tmp.v[1] = this->v[2]*cod.v[0] - this->v[0]*cod.v[2];
   tmp.v[2] = this->v[0]*cod.v[1] - this->v[1]*cod.v[0];
+  return tmp;
+}
+
+gvector gvector::operator/(double a) {
+  gvector tmp(*this);
+  tmp.v[0] /= a;
+  tmp.v[1] /= a;
+  tmp.v[2] /= a;
   return tmp;
 }
 
@@ -153,11 +162,7 @@ gvector gvector::unit() {
     return p;
   }
 
-  p.v[0] /= l;
-  p.v[1] /= l;
-  p.v[2] /= l;
-
-  return p;
+  return p / l;
 }
 
 gvector operator*(const double a, const gvector& b) {
@@ -172,58 +177,3 @@ gvector operator*(const double a, const gvector& b) {
 std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, gvector cod) {
   return o << cod.toString();
 }
-
-// 垂線の足を求める
-// TODO: 外積を用いて計算しているが、X-Y平面限定だと、もう少し計算量を減らすことができる
-gvector footOfAPerpendicular(gvector pos, gvector posA, gvector vecA) {
-  gvector va(vecA.unit());
-  gvector p(pos - posA);
-
-  // 点と直線を含む平面に垂直なベクトルと直線のベクトルの外積を求める。
-  gvector v((p * va) * va);
-  v = v.unit();
-
-  // 点から垂線の足までの長さを求める
-  double t = (p * va) .length();
-
-  p =  pos + v * t;
-
-  return p;
-}
-
-// TODO: 交点が無かったら・・・どうしよう。
-// 交点が無い条件
-// 　直線Aと直線Bが平行。この時は同一直線上の場合も含むか？（この場合はある意味交点は無数に存在する）
-// 　直線Aと直線Bがねじれの位置（3次元）
-// 　交点はあるが、直線Aまたは直線Bの区間上に存在しない
-gvector intersect(gvector& posA, gvector& vecA, gvector& posB, gvector& vecB) {
-  double  eps = 1.0E-10;
-
-  gvector va(vecA.unit());
-
-  double t;
-
-  t = ((posB - posA ) * vecB ).length() / ( va * vecB ).length();
-  gvector pos(posA + va * t);
-/*
-    // 直線Aと直線Bの方向ベクトルの外積をとって、大きさが0なら平行
-    if((vecA * vecB).length()<=eps) {
-        // 平行
-        // 直線Aの始点から直線Bの始点へ伸ばしたベクトルと直線Bのベクトルの外積が0なら同一直線上にある
-        if(((posB - posA) * vecB).length()<=eps) {
-            // 同一直線上
-            // あとは双方の区間の調査かな
-        } else {
-            // 平行
-        }
-    } else {
-        // 平行ではない
-        // 2直線が同一平面上にあるか？
-        // 垂線の足を求める
-        // 後は長さをピタゴラスの方程式で求めて、ベクトル加算かなぁ。
-        // 最後は双方の区間に乗っているか調査
-    }
-*/
-    return pos;
-}
-
