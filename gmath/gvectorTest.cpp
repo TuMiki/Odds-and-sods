@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cppunit/extensions/HelperMacros.h>
 
-#include "gvector.h"
+#include "gline.h"
 
 using std::string;
 using std::cout;
@@ -31,7 +31,7 @@ class gvectorTest : public CPPUNIT_NS::TestFixture {
         CPPUNIT_TEST(dot_Test);
 
 //        CPPUNIT_TEST(footOfAPerpendicular_Test);
-//        CPPUNIT_TEST(intersect_Test);
+        CPPUNIT_TEST(intersect_Test);
         
     CPPUNIT_TEST_SUITE_END();
 
@@ -239,8 +239,7 @@ protected:
         CPPUNIT_ASSERT_EQUAL( s4, c.toString() );
         CPPUNIT_ASSERT_EQUAL( s5, d.toString() );
 
-        // TODO: CPPUNIT_ASSERT_EQUAL( d, e)とするには宣言がたりないみたい
-        CPPUNIT_ASSERT( d == e );
+        CPPUNIT_ASSERT_EQUAL( d, e );
     }
 
     void operator_equals_Test() {
@@ -257,9 +256,9 @@ protected:
         CPPUNIT_ASSERT_EQUAL( s4, c.toString() );
 
 
-        CPPUNIT_ASSERT(a == b);
+        CPPUNIT_ASSERT_EQUAL(a, b);
         CPPUNIT_ASSERT(!(a != b));
-        CPPUNIT_ASSERT(a == (b + (c * 1e-11))); // ちょっと大雑把。絶対比較で誤差比較してるってこと
+        CPPUNIT_ASSERT_EQUAL(a, (b + (c * 1e-11))); // ちょっと大雑把。絶対比較で誤差比較してるってこと
         CPPUNIT_ASSERT(a != (b + (c * 1e-10)));
 
     }
@@ -303,19 +302,34 @@ protected:
 
         CPPUNIT_ASSERT( posC == footOfAPerpendicular(pos, posA, vecA) );
     }
-
-    void intersect_Test() {
-        gvector posA(0, 0, 0);
-        gvector vecA(4, 6, 5);
-        gvector posB(0, 0, 0);
-        gvector vecB(4, 6, 5);
-        gvector posC(1, 0, 0);
-
-        CPPUNIT_ASSERT( posC == intersect(posA, vecA, posB, vecB) );
-        // TODO: 以下の形式で実行出きるようにしたい！
-        // CPPUNIT_ASSERT_EQUAL( posC, intersect(posA, vecA, posB, vecB) );
-    }
 */
+    void intersect_Test() {
+        CPPUNIT_ASSERT_EQUAL_MESSAGE( "双方の線分の中",
+                gvector(3,0),
+                intersect(gline(gvector(1,0), gvector(5,0)),
+                          gline(gvector(3,1), gvector(0,1))));
+
+        CPPUNIT_ASSERT_EQUAL_MESSAGE( "双方の線分の外（終点の先）",
+                gvector(6,0),
+                intersect(gline(gvector(1,0), gvector(5,0)),
+                          gline(gvector(6,2), gvector(0,1))));
+
+        CPPUNIT_ASSERT_EQUAL_MESSAGE( "前の終点の先、後ろの始点の先",
+                gvector(6,0),
+                intersect(gline(gvector(1,0), gvector(5,0)),
+                          gline(gvector(6,2), gvector(0,-1))));
+
+        CPPUNIT_ASSERT_EQUAL_MESSAGE( "前の始点の先、後ろの終点の先",
+                gvector(6,0),
+                intersect(gline(gvector(1,0), gvector(-5,0)),
+                          gline(gvector(6,2), gvector(0,1))));
+
+        CPPUNIT_ASSERT_EQUAL_MESSAGE( "前の始点の先、後ろの始点の先",
+                gvector(6,0),
+                intersect(gline(gvector(1,0), gvector(-5,0)),
+                          gline(gvector(6,2), gvector(0,-1))));
+    }
+
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(gvectorTest);

@@ -11,6 +11,8 @@
  */
 class gline {
   protected:
+    bool    s, e; // 始点、終点の有界とするかどうかのフラグ。
+                  // 初期値はfalse=有界ではない=数学の直線に一致
     gvector pos;  // 直線上の一点。始点
     gvector vec;  // 直線の方向。線分として扱う場合、大きさが長さとします
 
@@ -25,6 +27,11 @@ class gline {
 //    bool operator==(const gline& lin); // 比較
 //    bool operator!=(const gline& lin); // 比較
 
+    bool getS() { return s; }
+    bool getE() { return e; }
+
+    void setS(bool s) { this->s = s; }
+    void setE(bool e) { this->e = e; }
     gvector getPos() { return pos; }
     gvector getVec() { return vec; }
 
@@ -35,7 +42,7 @@ class gline {
 gvector footOfAPerpendicular(gvector& pos, gline& lin);
 
 // 2直線の交点を求める
-gvector intersect(gline& lineA, gline& lineB);
+gvector intersect(gline lineA, gline lineB);
 
 // 2点の垂直二等分線を求める XY平面上限定
 gline perpendicularBisectorOnXY(gvector& posA, gvector& posB);

@@ -121,7 +121,7 @@ std::string gvector::toString() {
   a += ")";
   return a;
 }
-
+/*
 bool gvector::operator==(const gvector& vec) {
   double eps = 1.0E-10;
   if(
@@ -134,6 +134,20 @@ bool gvector::operator==(const gvector& vec) {
   
   return false;
 }
+
+bool gvector::operator==(const gvector vec) {
+  double eps = 1.0E-10;
+  if(
+      fabs(this->v[0] - vec.v[0])
+     +fabs(this->v[1] - vec.v[1])
+     +fabs(this->v[2] - vec.v[2])
+     <= eps) {  // TODO: 共通化して目的毎に変えれるようにしないとだめかなぁ。それと絶対・相対誤差はどうするか・・やっぱ後だ！
+     return true;
+  }
+  
+  return false;
+}
+*/
 
 bool gvector::operator!=(const gvector& cod) {
   return !(*this == cod);
@@ -170,9 +184,9 @@ gvector operator*(const double a, const gvector& b) {
   return tmp * a;
 }
 
-//bool operator==(const gvector& va, const gvector& vb) {
-//  return va==vb;
-//}
+bool operator==(const gvector va, const gvector vb) {
+  return gvector::sames(gvector(va), gvector(vb));
+}
 
 std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, gvector cod) {
   return o << cod.toString();

@@ -7,11 +7,16 @@
  * コンストラクタ
  */
 gline::gline(const gvector& pos, const gvector& vec) {
+  this->s = false;
+  this->e = false;
   this->pos = pos;
   this->vec = vec;
 }
 
 gline::gline(const gline& lin) {
+  this->s = lin.s;
+  this->e = lin.e;
+
   this->pos = lin.pos;
   this->vec = lin.vec;
 }
@@ -24,6 +29,9 @@ gline::~gline() {
 }
 
 gline& gline::operator=(const gline& lin) {
+  this->s = lin.s;
+  this->e = lin.e;
+
   this->pos = lin.pos;
   this->vec = lin.vec;
 
@@ -31,6 +39,7 @@ gline& gline::operator=(const gline& lin) {
 }
 
 std::string gline::toString() {
+  // TODO: 有界かどうかの表現方法
   return "{ pos" + this->pos.toString() + ", vec" + this->vec.toString() + " }";
 }
 
@@ -61,7 +70,7 @@ gvector footOfAPerpendicular(gvector& pos, gline& lin) {
 // 　直線Aと直線Bが平行。この時は同一直線上の場合も含むか？（この場合はある意味交点は無数に存在する）
 // 　直線Aと直線Bがねじれの位置（3次元）
 // 　交点はあるが、直線Aまたは直線Bの区間上に存在しない
-gvector intersect(gline& linA, gline& linB) {
+gvector intersect(gline linA, gline linB) {
   double  eps = 1.0E-10;
 
   gvector va(linA.getVec().unit());
@@ -81,6 +90,11 @@ gvector intersect(gline& linA, gline& linB) {
 
   t = ((linB.getPos() - linA.getPos() ) * linB.getVec() ).length() / ( va * linB.getVec() ).length();
   pos = linA.getPos() + va * t;
+
+  // この点が、linBに乗っていないのなら、tをマイナスにして計算。(linAの始点の先)
+  if(((pos-linB.getPos()) * linB.getVec()).length() > eps) {
+    pos = linA.getPos() - va * t;
+  }
 
 /*
     // 直線Aと直線Bの方向ベクトルの外積をとって、大きさが0なら平行
@@ -104,3 +118,15 @@ gvector intersect(gline& linA, gline& linB) {
     return pos;
 }
 
+// 2点の垂直二等分線を求める XY平面上限定
+gline perpendicularBisectorOnXY(gvector& posA, gvector& posB) {
+  // 二点を結ぶベクトルを定義
+  gvector v(posB - posA);
+
+  // XY平面の法線ベクトル
+  gvector z(0,0,1);
+
+  gline lin(posA + v / 2, z * v);
+
+  return lin;
+}

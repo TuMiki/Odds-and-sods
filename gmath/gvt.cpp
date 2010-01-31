@@ -54,10 +54,12 @@ void initGVector(void) {
 
   retPos2 = intersect(linA, linB);
 
-  cout << "retPos2" << retPos2 << endl;
-
   drawLine(linB);
   drawPoint(retPos2);
+
+  gline linC(perpendicularBisectorOnXY(posA, retPos2));
+  drawLine(linC);
+
 }
 
 void drawGVector(void) {

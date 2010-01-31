@@ -3,7 +3,7 @@
 
 #include <string>
 #include <iostream>
-
+#include <math.h>
 /*
  * 座標を扱うためのclass.
  * vectorとしたいところだが、コンテナクラスに同名があるため、gvectorとした
@@ -34,7 +34,7 @@ class gvector {
     gvector operator*(const gvector& cod); // 外積
     gvector operator/(double a); // gvector / double
 
-    bool operator==(const gvector& cod); // 比較
+//    bool operator==(const gvector& cod); // 比較
     bool operator!=(const gvector& cod); // 比較
 
     double length();
@@ -43,10 +43,27 @@ class gvector {
 
     double getX() { return v[0]; }
     double getY() { return v[1]; }
+    double getZ() { return v[2]; }
     // TODO: 変数にコピーして返さないと安全じゃないよなぁ
     double* get() { return this->v; };
     
     std::string toString();
+
+    static
+    bool sames(gvector va, gvector vb) {
+      double *a = va.get();
+      double *b = vb.get();
+      double eps = 1.0E-10;
+      if(
+          fabs(a[0] - b[0])
+         +fabs(a[1] - b[1])
+         +fabs(a[2] - b[2])
+         <= eps) {  // TODO: 共通化して目的毎に変えれるようにしないとだめかなぁ。それと絶対・相対誤差はどうするか・・やっぱ後だ！
+         return true;
+      }
+  
+      return false;
+    }
 };
 
 // 2項演算子で左側が gvector 以外の場合は、通常の関数として演算子をオーバーロードする
@@ -56,4 +73,5 @@ gvector operator*(const double a, const gvector& b);
 
 std::basic_ostream<char>& operator<<(std::basic_ostream<char>& o, gvector cod);
 
+bool operator==(gvector a, gvector b); // 比較
 #endif
