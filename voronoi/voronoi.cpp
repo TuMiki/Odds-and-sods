@@ -184,11 +184,7 @@ vector<gvector> points;
 vector<gline> lines;
 
 void calcVoronoi(void) {
-  // TODO: 線分情報とかの初期化
   // 次に点をどんどん加えてながら、逐次添加法により順次点を足していく
-
-  // 点を描画
-//  drawPoint(p);
 
   // 1点目は何もしない
   if(points.size()==3) {
@@ -196,21 +192,23 @@ void calcVoronoi(void) {
     // 後は同じように既存線分を編集していく．．．
     // 今のところここで終了
     gline lin = perpendicularBisectorOnXY(points[1], points[2]);
-//    drawLine(lin);
     gvector w = intersect(lines[0], lin); 
     // 交点でトリムして直線を再生成するときにどちら側にするかの判定が必要
     gline linB = gline(w, lin.getVec());
     linB.setS(true);
     lines.push_back(linB);
-    //drawLine(linB);
-    //drawPoint(w, 2);
-    //lin = perpendicularBisectorOnXY(points[0], points[2]);
+    lines[0] = gline(w, lines[0].getVec());
+    lines[0].setS(true);
+    linB = perpendicularBisectorOnXY(points[0], points[2]);
+    // ベクトルを反転している
+    linB = gline(w, -linB.getVec());
+    linB.setS(true);
+    lines.push_back(linB);
     //drawLine(lin);
   } else if(points.size() == 2) {
     // 2点目なら、間に垂直二等分線を作る
     gline lin = perpendicularBisectorOnXY(points[0], points[1]);
     lines.push_back(lin);
-    //drawLine(lin);
   }
 }
 
@@ -274,6 +272,7 @@ void keyboard(unsigned char key, int x, int y) {
       break;
     case 's':
     case 'S':
+    case ' ':
       // 頂点を1つ足す
       points.push_back(randomPoint());
       calcVoronoi();
